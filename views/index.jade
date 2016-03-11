@@ -1,0 +1,46 @@
+doctype html
+html(lang="en")
+    head
+        title= "Autoapi"
+        link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
+        link(href='stylesheets/main.css', rel='stylesheet')
+    body
+        nav(class='navbar navbar-default')
+            div.container-fluid
+                div.navbar-header
+                    button(type='button', class='navbar-toggle collapsed', data='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+                        span.sr-only Toggle navigation
+                        each val in [1, 2, 3]
+                            span.icon-bar
+                    a(class='navbar-brand display-xs') Menú
+                div(class='collapse navbar-collapse', id='bs-example-navbar-collapse-1')
+                    ul(class='nav navbar-nav')
+                        li
+                            a(href='/') Home
+                        li
+                            a(href='/about') About
+                        li
+                            a(href='/doc') Documentation
+        div.container
+            header
+                h1!= title
+                h3!= message
+                p Tenemos 100 marcas y 400 modelos de vehículos hasta la fecha.
+            section
+                h2 Es muy simple
+                input(type='text', class='form-control', placeholder='Ingresa tu api')
+                pre.
+                    {
+                        "id": 1,
+                        "marca": Toyota,
+                        "modelos": [
+                            "modelo": V8,
+                            "year": 2003,
+                            "url": "http://localhost:8000/api/v2/ability/34/"
+                        ],
+                        [
+                            "modelo": V9,
+                            "year": 2004,
+                            "url": "http://localhost:8000/api/v2/ability/23/"
+                        ],
+                    }

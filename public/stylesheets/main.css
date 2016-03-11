@@ -1,0 +1,19 @@
+body {
+    background: #DEDEDE;
+}
+.display-xs {
+    display: none !important;
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 970px;
+    }
+}
+@media (max-width: 767px) {
+    .display-xs {
+        display: block !important;
+    }
+}
+header {
+    text-align: center;
+}
