@@ -9,7 +9,7 @@ app.use(express.static('public'));
 app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
-    res.render('index', { title: 'Autoapi', subtitle: 'All makes and models of vehicles for free for your projects.', message: 'We have 74 makes of vehicles until now'});
+    res.render('index', { title: 'Carapi', subtitle: 'All makes and models of vehicles for free for your projects.', message: 'We have 74 makes of vehicles until now'});
 });
 
 app.get('/api/make/:make', function(request, response) {
