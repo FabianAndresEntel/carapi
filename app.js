@@ -9,8 +9,7 @@ app.use(express.static('public'));
 app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
-    var autoapi = require('./json/autoapi.json');
-    res.render('index', { title: 'Autoapi', subtitle: 'All makes and models of vehicles for free for your projects.', message: 'We have '+autoapi.makes.length+' makes of vehicles until now'});
+    res.render('index', { title: 'Autoapi', subtitle: 'All makes and models of vehicles for free for your projects.', message: 'We have 74 makes of vehicles until now'});
 });
 
 app.get('/api/make/:make', function(request, response) {
@@ -77,7 +76,7 @@ app.get('/api/make/:make', function(request, response) {
                 mo++;
                 data_models.versions = json_years;
                 json_models.push(data_models); // Add models to array
-                console.log("ready years!");
+                //console.log("ready years!");
                 makes.models = json_models;
 
                 if (mo == ma) {
@@ -89,13 +88,13 @@ app.get('/api/make/:make', function(request, response) {
         })
         .on("end", function(){
             // End of models
-            console.log("ready models!");
+            //console.log("ready models!");
 
         });
     })
     .on("end", function(){
         // End of makes
-        console.log("ready makes!");
+        //console.log("ready makes!");
     });
 
 });
