@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
     head
-        title= "Autoapi"
+        title= title
         link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
         link(href='stylesheets/main.css', rel='stylesheet')
     body
@@ -24,14 +24,18 @@ html(lang="en")
         div.container
             header
                 h1!= title
+                h2!= subtitle
                 h3!= message
-                p Tenemos 100 marcas y 400 modelos de vehículos hasta la fecha.
-            section
-                h2 Es muy simple
-                input(type='text', class='form-control', placeholder='Ingresa tu api')
-                pre.
+            section.home_api
+                h2.text-center Es muy simple
+                div(class='input-group')
+                    span(class='input-group-addon url') http://autoapi.heroku.com/api/
+                    input(type='text', class='form-control', placeholder='make/77')
+                    span.input-group-btn
+                        button(class='btn btn-primary') View make
+                pre#view_make.
                     {
-                        "id": 1,
+                        "id": 77,
                         "marca": Toyota,
                         "modelos": [
                             "modelo": V8,
@@ -44,3 +48,9 @@ html(lang="en")
                             "url": "http://localhost:8000/api/v2/ability/23/"
                         ],
                     }
+            footer
+                p.text-center Desarrollado por 
+                    a(href="http://cesaraquino.com.pe") César J. Aquino Maximiliano
+    script(src='https://code.jquery.com/jquery-2.2.1.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
+    script(src='javascript/main.js')
