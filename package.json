@@ -1,6 +1,7 @@
 {
-  "name": "autoapi",
+  "name": "carapi",
   "version": "1.0.0",
+  "private": true,
   "description": "Todas las marcas y modelos de vehículos gratuitamente para tus proyectos.",
   "main": "app.js",
   "scripts": {
@@ -24,7 +25,6 @@
   "homepage": "https://github.com/cesjam7/autoapi#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "jade": "^1.11.0",
-    "underscore": "^1.8.3"
+    "jade": "^1.11.0"
   }
 }
