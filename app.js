@@ -19,12 +19,12 @@ app.get('/api/make/:make', function(request, response) {
     if (!(make > 0)){
         response.send('{"detail":"Not found."}'); // Return json with data
     }
-    var json_models = new Array();
+    var jsonModels = new Array();
 
-    var csv_makes = fs.createReadStream("./data/makes.csv");
+    var csvMakes = fs.createReadStream("./data/makes.csv");
 
     csv
-    .fromStream(csv_makes, {headers : true})
+    .fromStream(csvMakes, {headers : true})
     .validate(function(makes){
 
         return makes.id == make; // make with id url
@@ -35,10 +35,10 @@ app.get('/api/make/:make', function(request, response) {
         // Defino contadores para ver en que momento debo hacer el "send"
         var ma = 0;
         var mo = 0;
-        var csv_models = fs.createReadStream("./data/models.csv");
+        var csvModels = fs.createReadStream("./data/models.csv");
 
         csv
-        .fromStream(csv_models, {headers : true})
+        .fromStream(csvModels, {headers : true})
         .validate(function(models){
 
             return models.idmake == make; //all models with id make
@@ -47,17 +47,17 @@ app.get('/api/make/:make', function(request, response) {
         .on("data", function(models){
 
             ma++;
-            var data_models = new Object();
+            var dataModels = new Object();
             var idmodel = models.id;
-            data_models.id = idmodel;
-            data_models.model = models.model;
-            data_models.url = home_url+"/api/model/"+idmodel;
+            dataModels.id = idmodel;
+            dataModels.model = models.model;
+            dataModels.url = home_url+"/api/model/"+idmodel;
 
-            var csv_years = fs.createReadStream("./data/years_models.csv");
-            var json_years = new Array();
+            var csvYears = fs.createReadStream("./data/years_models.csv");
+            var jsonYears = new Array();
 
             csv
-            .fromStream(csv_years, {headers : true})
+            .fromStream(csvYears, {headers : true})
             .validate(function(years){
 
                 return years.idmodel == idmodel; //all years with id make
@@ -68,16 +68,17 @@ app.get('/api/make/:make', function(request, response) {
                 var data_years = new Object();
                 data_years.year = years.year;
                 data_years.url = home_url+"/api/year/"+years.year;
-                json_years.push(data_years); // Add models to array
+                jsonYears.push(data_years); // Add models to array
 
             })
             .on("end", function(){
                 // End of years
                 mo++;
-                data_models.versions = json_years;
-                json_models.push(data_models); // Add models to array
+                dataModels.versions = jsonYears;
+                jsonModels.push(dataModels); // Add models to array
                 //console.log("ready years!");
-                makes.models = json_models;
+                makes.url = home_url+"/api/make/"+make;
+                makes.models = jsonModels;
 
                 if (mo == ma) {
                     response.send(makes); // Return json with data
@@ -95,6 +96,81 @@ app.get('/api/make/:make', function(request, response) {
     .on("end", function(){
         // End of makes
         //console.log("ready makes!");
+    });
+
+});
+
+app.get('/api/model/:model', function(request, response) {
+
+    var model = request.params.model;
+
+    if (!(model > 0)){
+        response.send('{"detail":"Not found."}'); // Return json with data
+    }
+
+    var csvModels = fs.createReadStream("./data/models.csv");
+
+    csv
+    .fromStream(csvModels, {headers : true})
+    .validate(function(models){
+
+        return models.id == model; // model with id url
+
+    })
+    .on("data", function(models){
+
+        var idmake = models.idmake;
+
+        var csvMakes = fs.createReadStream("./data/makes.csv");
+
+        csv
+        .fromStream(csvMakes, {headers : true})
+        .validate(function(makes){
+
+            return makes.id == idmake; //all models with id make
+
+        })
+        .on("data", function(makes){
+
+            models.make = makes.make;
+            models.url = home_url+"/api/model/"+model;
+
+            var csvYears = fs.createReadStream("./data/years_models.csv");
+            var jsonYears = new Array();
+
+            csv
+            .fromStream(csvYears, {headers : true})
+            .validate(function(years){
+
+                return years.idmodel == model; //all years with id make
+
+            })
+            .on("data", function(years){
+
+                var data_years = new Object();
+                data_years.year = years.year;
+                data_years.url = home_url+"/api/year/"+years.year;
+                jsonYears.push(data_years); // Add models to array
+
+            })
+            .on("end", function(){
+                // End of years
+                models.year = jsonYears;
+                response.send(models); // Return json with data
+
+            });
+
+        })
+        .on("end", function(){
+            // End of makes
+            console.log("ready makes!");
+        });
+
+
+    })
+    .on("end", function(){
+        // End of models
+        console.log("ready models!");
     });
 
 });

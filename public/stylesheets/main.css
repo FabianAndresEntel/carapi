@@ -48,7 +48,12 @@ ul.nav.navbar-nav {
     border-right: 0;
 }
 .home_api .input-group {
-    margin: 20px 0;
+    margin-top: 20px;
+}
+.home_api .help {
+    margin: 7px 0 15px;
+    display: block;
+    font-style: italic;
 }
 #view_make {
     max-height: 400px;
